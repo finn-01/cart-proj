@@ -30,6 +30,17 @@ const AppProvider = ({ children }) => {
 		dispatch({ type: "DECREASE", payload: id });
 	};
 
+	const fetchData = async () => {
+		dispatch({ type: "LOADING" });
+		const respone = await fetch(url);
+		const cart = await respone.json();
+		dispatch({ type: "DISPLAY_ITEMS", payload: cart });
+	};
+
+	useEffect(() => {
+		fetchData();
+	}, []);
+
 	useEffect(() => {
 		// console.log("hello");
 		dispatch({ type: "GET_TOTALS" });
